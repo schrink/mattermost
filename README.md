@@ -38,12 +38,8 @@ Here's how to start:
   5. At the top of your app dashboard, go to the **Settings** tab and scroll down to the **Domains** section. Copy the URL below **Heroku Domain** (we'll refer to this as `http://<your-heroku-domain>/` and we'll need it in the next step)
   6. Leave your Heroku interface open as we'll come back to it to finish the setup.
 
-3. **Connect your project to your GitLab account for outgoing webhooks**
- 1. Log in to GitLab account and open the project from which you want to receive updates and to which you have administrator access. From the left side of the project screen, click on **Settings** > **Web Hooks**. In the **URL** field enter `http://<your-heroku-domain>/` from the previous step, plus the word `new_event` to create an entry that reads **`http://<your-heroku-domain>/new_event`** so events from your GitLab project are sent to your Heroku server. Make sure your URL has a leading `http://` or `https://`.
- 2. On the same page, under **Trigger** select **Push events**, **Comment events**, **Issue events**, **Merge Request events**
- 3. (Recommended but optional): Encrypt your connection from GitLab to your project by selecting **Enable SSL verification**. If this option is not available and you're not familiar with how to set it up, contact your GitLab System Administrator for help.
- 3. Click **Add Web Hook** and check that your new webhook entry is added to the **Web hooks** section below the button.
- 4. Leave this page open as we'll come back to it to test that everything is working.
+3. **Connect your PivotalTracker project to your Heroku instance**
+ # TODO
 
 4. **Set up your Mattermost instance to receive incoming webhooks**
  1. Log in to your Mattermost account. Click the three dot menu at the top of the left-hand side and go to **Account Settings** > **Integrations** > **Incoming Webhooks**.
@@ -78,7 +74,7 @@ Here's how to start:
     - `[sudo] pip install virtualenv`
     - to handle virtual envs even simpler consider the virtualenvwrapper:  `[sudo] pip install virtualenvwrapper`
  6. Install integration requirements:
-    - `[sudo] pip install git+https://github.com/NotSqrt/mattermost-integration-pivotaltracker`
+    - `[sudo] pip install git+https://git.studioqi.ca/lefebvre/mattermost-integration-pivotaltracker.git`
  7. Run the server:
     - `mattermost_pivotaltracker --help`
     - `mattermost_pivotaltracker $MATTERMOST_WEBHOOK_URL`
@@ -112,9 +108,5 @@ stdout_logfile=/home/mattermost/logs/mattermost_pivotaltracker.log
 redirect_stderr=true
 ```
 
-3. **Connect your project to your GitLab account for outgoing webhooks**
- 1. Log in to GitLab account and open the project from which you want to receive updates and to which you have administrator access. From the left side of the project screen, click on **Settings** > **Web Hooks**. In the **URL** field enter `http://<your-mattermost-integration-URL>/new_event` (notice extra `new_event` URL argument). On this address the integration service will be receiving the events from your GitLab project. Make sure your URL has a leading `http://` or `https://`.
- 2. On the same page, under **Trigger** select **Push events**, **Comment events**, **Issue events**, **Merge Request events**
- 3. (Recommended but optional): Encrypt your connection from GitLab to your project by selecting **Enable SSL verification**. If this option is not available and you're not familiar with how to set it up, contact your GitLab System Administrator for help.
- 4. Click **Add Web Hook** and check that your new webhook entry is added to the **Web hooks** section below the button.
- 5. Leave this page open as we'll come back to it to test that everything is working.
+3. **Connect your Pivotal Tracker project to your integration**
+4. # TODO
