@@ -29,11 +29,11 @@ To install this project using Heroku, you will need:
 Here's how to start:
 
 1. **Create a copy of this project to manipulate**
-  1. Log in to your GitHub account. Go to the [Github repository of this project](https://github.com/mattermost/mattermost-integration-gitlab/edit/it-edits/README.md) and click **Fork** in the top-right corner to create a copy of this project that you control and manipulate.
+  1. Log in to your GitHub account. Go to the [Github repository of this project](https://git.studioqi.ca/lefebvre/mattermost-integration-pivotal) and click **Fork** in the top-right corner to create a copy of this project that you control and manipulate.
 2. **Deploy your project copy to Heroku**
-  1. Go to your [**Heroku Dashboard**](https://dashboard.heroku.com/apps) and click **+** in the top-right corner then **Create New App**. Give your app a unqiue name (like `mattermost-gitlab-[YOUR_GITHUB_USERNAME]`), select your region and click **Create App**.
+  1. Go to your [**Heroku Dashboard**](https://dashboard.heroku.com/apps) and click **+** in the top-right corner then **Create New App**. Give your app a unqiue name (like `mattermost-pivotaltracker-[YOUR_GITHUB_USERNAME]`), select your region and click **Create App**.
   2. Heroku directs you to the **Deploy** tab of the dashboard for your new app, select **GitHub** as your connection option, then click **Connect to GitHub** at the bottom of the screen to authorize Herkou to access your GitHub account.
-  3. In the pop up window, click **Authorize Application** to allow Heroku to access your accounts repositories. On your Heroku dashboard, select your account in the first drop-down then search for the repo we created earlier by forking this project. Type `mattermost-integration-gitlab` in the **repo-name** field, then click **Search** and then the **Connect** button once Heroku finds your repository.
+  3. In the pop up window, click **Authorize Application** to allow Heroku to access your accounts repositories. On your Heroku dashboard, select your account in the first drop-down then search for the repo we created earlier by forking this project. Type `mattermost-integration-pivotaltracker` in the **repo-name** field, then click **Search** and then the **Connect** button once Heroku finds your repository.
   4. Scroll to the bottom of the new page. Under the **Manual Deploy** section, make sure the `master` branch is selected then click **Deploy Branch**. After a few seconds you'll see a confirmation that the app has been deployed.
   5. At the top of your app dashboard, go to the **Settings** tab and scroll down to the **Domains** section. Copy the URL below **Heroku Domain** (we'll refer to this as `http://<your-heroku-domain>/` and we'll need it in the next step)
   6. Leave your Heroku interface open as we'll come back to it to finish the setup.
@@ -52,12 +52,6 @@ Here's how to start:
  4. Go back to your Heroku app dashboard under the **Settings** tab. Under the **Config Variables** section, click **Reveal Config Vars**
      1. Type `MATTERMOST_WEBHOOK_URL` in the **KEY** field and paste `https://<your-mattermost-webhook-URL>` into the **VALUE** field, then click **Add**.
      2. In the second **KEY** field, type `PUSH_TRIGGER` and in the corresponding **VALUE** field, type `True`.
-
-5. **Test your webhook integration**
-  1. If your GitLab project is in active development, return to the **Settings** > **Web Hooks** page of your GitLab project and click **Test Hook** to send a test message about one of your recent updates from your GitLab project to Mattermost. You should see a notification on the Gitlab page that the hook was successfully executed. In Mattermost, go to the channel which you specified when creating the URL for your incoming webhook and make sure that the message delivered successfully.
-  2. If your GitLab project is new, try creating a test issue and then verify that the issue is posted to Mattermost.
-  3. Back on the settings tab of your Heroku app dashboard, under the **Config Variables**, click **Reveal Config Vars** and then click the `X` next to the **PUSH_TRIGGER** field you added. This config variable was used for testing only, and is better left turned off for production
-  4. If you have any issues, please go to http://forum.mattermost.org and let us know which steps in these instructions were unclear or didn't work.
 
 
 ### Linux/Ubuntu 14.04 Web Server Install
@@ -84,16 +78,16 @@ Here's how to start:
     - `[sudo] pip install virtualenv`
     - to handle virtual envs even simpler consider the virtualenvwrapper:  `[sudo] pip install virtualenvwrapper`
  6. Install integration requirements:
-    - `[sudo] pip install git+https://github.com/NotSqrt/mattermost-integration-gitlab`
+    - `[sudo] pip install git+https://github.com/NotSqrt/mattermost-integration-pivotaltracker`
  7. Run the server:
-    - `mattermost_gitlab --help`
-    - `mattermost_gitlab $MATTERMOST_WEBHOOK_URL`
+    - `mattermost_pivotaltracker --help`
+    - `mattermost_pivotaltracker $MATTERMOST_WEBHOOK_URL`
     You will see the output similar to `Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)`. This is default IP:PORT pair
     the integration service will listen on. We will refer to this address as the `https://<your-mattermost-integration-URL>`). You may change the IP:PORT with the adequate command-line options (see --help)
- 8. You may want to add an upstart script to auto-start mattermost_gitlab at boot:
+ 8. You may want to add an upstart script to auto-start mattermost_pivotaltracker at boot:
  
 ```
-# /etc/init/mattermost-gitlab.conf
+# /etc/init/mattermost-pivotaltracker.conf
 start on runlevel [2345]
 stop on runlevel [016]
 respawn
@@ -102,19 +96,19 @@ respawn
 setuid mattermost
 
 # Change the path if necessary, add options if need be
-exec /home/mattermost/ve/bin/mattermost_gitlab http://mattermost/hooks/hook-id
+exec /home/mattermost/ve/bin/mattermost_pivotaltracker http://mattermost/hooks/hook-id
 ```
 
- Instead of `/etc/init/` script you may want to handle the mattermost_gitlab with supervisor (http://supervisord.org/). The
+ Instead of `/etc/init/` script you may want to handle the mattermost_pivotaltracker with supervisor (http://supervisord.org/). The
     sample config file can be as simple as:
     
 ```
-[program:mattermost-gitlab]
+[program:mattermost-pivotaltracker]
 user=mattermost
-command=/home/mattermost/ve/mattermost/bin/mattermost_gitlab http://mattermost/hooks/hook-id
+command=/home/mattermost/ve/mattermost/bin/mattermost_pivotaltracker http://mattermost/hooks/hook-id
 autostart=true
 autorestart=true
-stdout_logfile=/home/mattermost/logs/mattermost_gitlab.log
+stdout_logfile=/home/mattermost/logs/mattermost_pivotaltracker.log
 redirect_stderr=true
 ```
 
@@ -124,9 +118,3 @@ redirect_stderr=true
  3. (Recommended but optional): Encrypt your connection from GitLab to your project by selecting **Enable SSL verification**. If this option is not available and you're not familiar with how to set it up, contact your GitLab System Administrator for help.
  4. Click **Add Web Hook** and check that your new webhook entry is added to the **Web hooks** section below the button.
  5. Leave this page open as we'll come back to it to test that everything is working.
-
-4. **Test your webhook integration**
-  1. If your GitLab project is in active development, return to the **Settings** > **Web Hooks** page of your GitLab project and click **Test Hook** to send a test message about one of your recent updates from your GitLab project to Mattermost. You should see a notification on the Gitlab page that the hook was successfully executed. In Mattermost, go to the channel which you specified when creating the URL for your incoming webhook and make sure that the message delivered successfully.
-  2. If your GitLab project is new, try creating a test issue and then verify that the issue is posted to Mattermost.
-  3. Remove the `export PUSH_TRIGGER=True` line from your `~/.bash_profile` and source it again `source ~/.bash_profile`. This was used for testing only, and is better left turned off for production
-  4. If you have any issues, please go to http://forum.mattermost.org and let us know which steps in these instructions were unclear or didn't work.

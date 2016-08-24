@@ -81,7 +81,7 @@ def parse_args(args=None):
 
     host, port = options.pop("host"), options.pop("port")
 
-    return host, port
+    return host, port, options
 
 
 def main():
