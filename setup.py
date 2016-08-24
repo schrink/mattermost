@@ -2,14 +2,14 @@ import os
 import setuptools
 
 setuptools.setup(
-    name="mattermost-integration-gitlab",
-    version="0.1.0",
-    url="https://github.com/NotSqrt/mattermost-integration-gitlab",
+    name="mattermost-integration-pivotaltracker",
+    version="0.1",
+    url="https://git.studioqi.ca/lefebvre/mattermost-integration-pivotaltracker",
 
-    author="NotSqrt",
-    author_email="notsqrt@gmail.com",
+    author="Pierre Paul Lefebvre",
+    author_email="info@pierre-paul.com",
 
-    description="GitLab Integration Service for Mattermost",
+    description="GitLab Integration Service for PivotalTracker",
     long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
 
     packages=setuptools.find_packages(),
@@ -31,7 +31,7 @@ setuptools.setup(
 
     entry_points={
         'console_scripts': [
-            'mattermost_gitlab = mattermost_gitlab.server:main',
+            'mattermost_pivotaltracker = mattermost_pivotaltracker.server:main',
         ]
     }
 )
