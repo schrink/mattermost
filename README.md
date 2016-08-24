@@ -13,7 +13,7 @@ To have your work included on the [Mattermost integrations page](http://www.matt
 To run this integration you need:
 
 1. A **web server** running **Ubuntu 14.04** and **Python 2.7** or compatible versions.
-2. A **[GitLab account](https://about.gitlab.com/)** with a repository to which you have administrator access
+2. A **[Pivotal Tracker account](https://www.pivotaltracker.com/)** with a project to which you have administrator access
 3. A **[Mattermost account](http://www.mattermost.org/)** where [incoming webhooks are enabled](https://github.com/mattermost/platform/blob/master/doc/integrations/webhooks/Incoming-Webhooks.md#enabling-incoming-webhooks)
 
 Many web server options will work, below we provide instructions for [**Heroku**](README.md#heroku-based-install) and a general [**Linux/Ubuntu**](README.md#linuxubuntu-1404-web-server-install) server.
@@ -50,11 +50,11 @@ Here's how to start:
      2. In the second **KEY** field, type `PUSH_TRIGGER` and in the corresponding **VALUE** field, type `True`.
 
 
-### Linux/Ubuntu 14.04 Web Server Install
+### Linux/Ubuntu 14.04/16.04 Web Server Install
 
-The following procedure shows how to install this project on a Linux web server running Ubuntu 14.04. The following instructions work behind a firewall so long as the web server has access to your GitLab and Mattermost instances.
+The following procedure shows how to install this project on a Linux web server running Ubuntu 14.04/16.04. Make sure the port is open on your firewall (`5000` by default).
 
-To install this project using a Linux-based web server, you will need a Linux/Ubuntu 14.04 web server supporting Python 2.7 or a compatible version. Other compatible operating systems and Python versions should also work.
+To install this project using a Linux-based web server, you will need a Linux/Ubuntu 14.04/16.04 web server supporting Python 2.7+ or a compatible version. Other compatible operating systems and Python versions should also work.
 
 Here's how to start:
 
