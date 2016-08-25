@@ -28,12 +28,14 @@ def root():
 @app.route('/new_event', methods=['POST'])
 def new_event():
     """
-    PivotalTracker event handler, handles POST events from a Pivotal Tracker Project
+    PivotalTracker event handler, handles POST events from a
+    Pivotal Tracker Project
     """
 
     if request.json is None:
         print('Invalid Content-Type')
-        return 'Content-Type must be application/json and the request body must contain valid JSON', 400
+        return 'Content-Type must be application/json and the request body\
+                must contain valid JSON', 400
 
     try:
         message = request.json.get('message')
@@ -44,6 +46,8 @@ def new_event():
         traceback.print_exc()
 
     return 'OK'
+
+
 def post_text(text):
     """
     Mattermost POST method, posts text to the Mattermost incoming webhook URL
@@ -59,23 +63,51 @@ def post_text(text):
         data['channel'] = app.config['CHANNEL']
 
     headers = {'Content-Type': 'application/json'}
-    resp = requests.post(app.config['MATTERMOST_WEBHOOK_URL'], headers=headers, data=json.dumps(data))
+    resp = requests.post(
+        app.config['MATTERMOST_WEBHOOK_URL'],
+        headers=headers,
+        data=json.dumps(data)
+    )
 
     if resp.status_code is not requests.codes.ok:
-        print('Encountered error posting to Mattermost URL %s, status=%d, response_body=%s' % (app.config['MATTERMOST_WEBHOOK_URL'], resp.status_code, resp.json()))
+        print(
+            'Encountered error posting to Mattermost URL {}, status={},\
+            response_body={}'.format(
+                app.config['MATTERMOST_WEBHOOK_URL'],
+                resp.status_code,
+                resp.json())
+        )
 
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('MATTERMOST_WEBHOOK_URL', help='The Mattermost webhook URL you created')
+    parser.add_argument(
+        'MATTERMOST_WEBHOOK_URL',
+        help='The Mattermost webhook URL you created'
+    )
 
     server_options = parser.add_argument_group("Server")
     server_options.add_argument('-p', '--port', type=int, default=5000)
     server_options.add_argument('--host', default='0.0.0.0')
 
-    parser.add_argument('-u', '--username', dest='USERNAME', default='gitlab')
-    parser.add_argument('--channel', dest='CHANNEL', default='')  # Leave this blank to post to the default channel of your webhook
-    parser.add_argument('--icon', dest='ICON_URL', default='https://www.pivotaltracker.com/favicon.ico')
+    parser.add_argument(
+        '-u',
+        '--username',
+        dest='USERNAME',
+        default='Pivotal Tracker'
+    )
+
+    # Leave this blank to post to the default channel of your webhook
+    parser.add_argument(
+        '--channel',
+        dest='CHANNEL',
+        default='')
+
+    parser.add_argument(
+        '--icon',
+        dest='ICON_URL',
+        default='https://www.pivotaltracker.com/favicon.ico'
+    )
 
     options = vars(parser.parse_args(args=args))
 
