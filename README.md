@@ -4,15 +4,13 @@ This integration service posts comments, new story and story status changes to t
 
 ## Project Goal
 
-The goal of this project is to provide a fully-functional template on which the Mattermost community can create their own integration services. Community members are invited to fork this repo to add improvements and to create new integrations.
-
-To have your work included on the [Mattermost integrations page](http://www.mattermost.org/community-applications/), please mail info@mattermost.com or tweet to [@MattermostHQ](https://twitter.com/mattermosthq).
+This middle-man project should help you integrate your changes from Pivotal Tracker into your Mattermost instance.
 
 ## Requirements
 
 To run this integration you need:
 
-1. A **web server** running **Ubuntu 14.04** and **Python 2.7** or compatible versions.
+1. A **web server** running **Ubuntu 14.04/16.04** and **Python 2.7+**.
 2. A **[Pivotal Tracker account](https://www.pivotaltracker.com/)** with a project to which you have administrator access
 3. A **[Mattermost account](http://www.mattermost.org/)** where [incoming webhooks are enabled](https://github.com/mattermost/platform/blob/master/doc/integrations/webhooks/Incoming-Webhooks.md#enabling-incoming-webhooks)
 
@@ -39,15 +37,17 @@ Here's how to start:
   6. Leave your Heroku interface open as we'll come back to it to finish the setup.
 
 3. **Connect your PivotalTracker project to your Heroku instance**
- # TODO
+  1. On your Pivotal Tracker dashboard, listing all your projects. Next to your project name, click on the **gear**.
+  2. On the left, click on **Integration**.
+  3. At the bottom of the page, enter `http://<your-heroku-domain>/new_event` and select **v5**.
+  4. Rinse and repeat for every project you want to track.
 
 4. **Set up your Mattermost instance to receive incoming webhooks**
  1. Log in to your Mattermost account. Click the three dot menu at the top of the left-hand side and go to **Account Settings** > **Integrations** > **Incoming Webhooks**.
- 2. Under **Add a new incoming webhook** select the channel in which you want GitLab notifications to appear, then click **Add** to create a new entry.
+ 2. Under **Add a new incoming webhook** select the channel in which you want your Pivotal Tracker notifications to appear, then click **Add** to create a new entry.
  3. Copy the contents next to **URL** of the new webhook you just created (we'll refer to this as `https://<your-mattermost-webhook-URL>` and add it to your Heroku server).
  4. Go back to your Heroku app dashboard under the **Settings** tab. Under the **Config Variables** section, click **Reveal Config Vars**
      1. Type `MATTERMOST_WEBHOOK_URL` in the **KEY** field and paste `https://<your-mattermost-webhook-URL>` into the **VALUE** field, then click **Add**.
-     2. In the second **KEY** field, type `PUSH_TRIGGER` and in the corresponding **VALUE** field, type `True`.
 
 
 ### Linux/Ubuntu 14.04/16.04 Web Server Install
@@ -60,7 +60,7 @@ Here's how to start:
 
 1. **Set up your Mattermost instance to receive incoming webhooks**
  1. Log in to your Mattermost account. Click the three dot menu at the top of the left-hand side and go to **Account Settings** > **Integrations** > **Incoming Webhooks**.
- 2. Under **Add a new incoming webhook** select the channel in which you want GitLab notifications to appear, then click **Add** to create a new entry.
+ 2. Under **Add a new incoming webhook** select the channel in which you want your Pivotal Tracker notifications to appear, then click **Add** to create a new entry.
  3. Copy the contents next to **URL** of the new webhook you just created (we'll refer to this as `https://<your-mattermost-webhook-URL>`).
 
 2. **Set up this project to run on your web server**
@@ -108,5 +108,7 @@ stdout_logfile=/home/mattermost/logs/mattermost_pivotaltracker.log
 redirect_stderr=true
 ```
 
-3. **Connect your Pivotal Tracker project to your integration**
-4. # TODO
+3. **Connect your PivotalTracker project to your Heroku instance**
+  1. On your Pivotal Tracker dashboard, listing all your projects. Next to your project name, click on the **gear**.
+  2. On the left, click on **Integration**.
+  3. At the bottom of the page, enter `http://<your-heroku-domain>/new_event` and select **v5**.
