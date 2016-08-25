@@ -38,7 +38,12 @@ def new_event():
                 must contain valid JSON', 400
 
     try:
+        primary_ressource = request.json.get('primary_resources')[0]
         message = request.json.get('message')
+        message += " - [{}]({})".format(
+            primary_ressource.get('name'),
+            primary_ressource.get('url')
+        )
         if message is not None:
             post_text(message)
     except Exception:
